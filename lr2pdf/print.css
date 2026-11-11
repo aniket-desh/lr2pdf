@@ -1,0 +1,231 @@
+/* Margin-notes layout. The page content box is the text column plus the note column;
+   the text column gives up 2.25in (a 1.95in note plus a 0.3in gap) on its right, and notes float into it with a
+   negative right margin (the Tufte CSS technique). */
+
+@font-face { font-family: "EB Garamond"; src: url(fonts/EBGaramond-Regular.ttf); font-weight: 400; font-style: normal; }
+@font-face { font-family: "EB Garamond"; src: url(fonts/EBGaramond-Italic.ttf); font-weight: 400; font-style: italic; }
+@font-face { font-family: "EB Garamond"; src: url(fonts/EBGaramond-Medium.ttf); font-weight: 500; font-style: normal; }
+@font-face { font-family: "EB Garamond"; src: url(fonts/EBGaramond-MediumItalic.ttf); font-weight: 500; font-style: italic; }
+@font-face { font-family: "EB Garamond"; src: url(fonts/EBGaramond-SemiBold.ttf); font-weight: 600 700; font-style: normal; }
+@font-face { font-family: "EB Garamond"; src: url(fonts/EBGaramond-SemiBoldItalic.ttf); font-weight: 600 700; font-style: italic; }
+
+@page {
+  margin: 0.85in 0.55in 0.85in 1in;
+  @top-left {
+    content: string(title);
+    font: italic 9pt "EB Garamond", Palatino, serif;
+    color: #5c5c5c;
+    vertical-align: bottom;
+    padding-bottom: 0.18in;
+  }
+  @top-right {
+    content: counter(page);
+    font: 9pt "EB Garamond", Palatino, serif;
+    font-variant-numeric: oldstyle-nums;
+    color: #5c5c5c;
+    vertical-align: bottom;
+    padding-bottom: 0.18in;
+  }
+  @footnote {
+    margin-right: 2.25in;
+    border-top: 0.5pt solid #b8b8b8;
+    padding-top: 5pt;
+    margin-top: 10pt;
+  }
+}
+@page :first {
+  @top-left { content: none; }
+  @top-right { content: none; }
+}
+
+html {
+  font-family: "EB Garamond", Palatino, serif;
+  font-size: 11.5pt;
+  line-height: 1.42;
+  color: #1a1a1a;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+}
+body { margin: 0; }
+
+/* ---- Title block ---- */
+header.masthead { margin: 0 0 22pt; padding-right: 2.25in; position: relative; }
+h1.title {
+  font-size: 27pt;
+  line-height: 1.08;
+  font-weight: 400;
+  margin: 0 0 9pt;
+  string-set: title content();
+  hyphens: manual;
+}
+.byline {
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.07em;
+  font-size: 11.5pt;
+  color: #333;
+}
+.byline .date { font-variant-caps: normal; letter-spacing: 0; font-style: italic; color: #5c5c5c; }
+.meta {
+  float: right;
+  clear: right;
+  width: 1.95in;
+  margin-left: 0.32in;
+  margin-right: -2.25in;
+  margin-top: 4pt;
+  font-size: 8.5pt;
+  line-height: 1.35;
+  color: #5c5c5c;
+}
+.meta .site { font-variant-caps: all-small-caps; letter-spacing: 0.06em; color: #333; font-size: 10pt; }
+.meta .tags { font-style: italic; }
+.linkpost { font-style: italic; font-size: 10.5pt; color: #5c5c5c; margin-top: 8pt; }
+
+/* ---- Body text column ---- */
+main { padding-right: 2.25in; }
+p { margin: 0 0 0.62em; hyphens: auto; orphans: 2; widows: 2; }
+main p.lede::first-line { font-variant-caps: all-small-caps; letter-spacing: 0.04em; }
+
+h2, h3, h4, h5, h6 { font-weight: 400; page-break-after: avoid; break-after: avoid; hyphens: manual; }
+h2 { font-size: 16.5pt; font-style: italic; margin: 1.35em 0 0.45em; line-height: 1.15; }
+h3 { font-size: 12.5pt; font-variant-caps: all-small-caps; letter-spacing: 0.06em; margin: 1.3em 0 0.4em; }
+h4, h5, h6 { font-size: 11.5pt; font-style: italic; margin: 1.1em 0 0.3em; }
+
+a { color: inherit; text-decoration: none; }
+a.ext { text-decoration: underline; text-decoration-color: #9a9a9a; text-decoration-thickness: 0.4pt; }
+
+blockquote {
+  margin: 0.9em 0 0.9em 0.2em;
+  padding-left: 1.1em;
+  border-left: 0.6pt solid #b8b8b8;
+  font-size: 10.8pt;
+  color: #2c2c2c;
+}
+blockquote p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 0 0 0.7em; padding-left: 1.4em; }
+li { margin-bottom: 0.25em; }
+li > p { margin-bottom: 0.3em; }
+
+hr { border: none; text-align: center; margin: 1.2em 0; height: auto; }
+hr::after { content: "*\2003*\2003*"; font-size: 12pt; color: #5c5c5c; }
+
+strong, b { font-weight: 600; }
+
+code { font-family: Menlo, "DejaVu Sans Mono", monospace; font-size: 0.78em; }
+pre {
+  font-family: Menlo, "DejaVu Sans Mono", monospace;
+  font-size: 7.6pt;
+  line-height: 1.38;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border-left: 0.6pt solid #b8b8b8;
+  padding: 2pt 0 2pt 10pt;
+  margin: 0.8em 0;
+}
+pre code { font-size: inherit; }
+
+/* ---- Figures, tables, math ---- */
+figure { margin: 1em auto; text-align: center; page-break-inside: avoid; break-inside: avoid; }
+figure img, p > img:not(.math) { max-width: 100%; max-height: 6.5in; height: auto; }
+figure[style] img { width: 100%; }
+figcaption { font-size: 9pt; font-style: italic; color: #5c5c5c; text-align: left; margin-top: 4pt; line-height: 1.35; }
+
+figure.table { text-align: left; }
+table { border-collapse: collapse; font-size: 9pt; line-height: 1.3; width: 100%; margin: 0.8em 0; font-variant-numeric: lining-nums tabular-nums; }
+td, th { border-top: 0.4pt solid #b8b8b8; border-bottom: 0.4pt solid #b8b8b8; padding: 3pt 6pt 3pt 0; vertical-align: top; text-align: left; }
+th { font-weight: 600; }
+td p, th p { margin: 0 0 0.3em; hyphens: auto; }
+/* Wide tables spill into the note column instead of being squeezed into the text column. */
+.wide { clear: right; margin-left: 0; margin-right: -2.25in; }
+.wide table { width: 100%; }
+figure.wide table, table.wide { font-size: 8.5pt; }
+
+img.math { display: inline; }
+.math-display { display: block; text-align: center; margin: 0.6em 0; }
+
+.spoiler { border-left: 0.6pt dashed #b8b8b8; padding-left: 1em; }
+.summary { font-style: italic; }
+
+/* ---- Margin notes ---- */
+/* The float's margin box must have positive width or WeasyPrint won't stack notes
+   (clear and float-avoidance ignore zero-width boxes). With margin-left 0.32in the
+   margin box is 0.32 + 1.95 - 2.25 = 0.02in wide: it stacks, and costs the text
+   column a negligible sliver. */
+.sidenote {
+  float: right;
+  clear: right;
+  width: 1.95in;
+  margin-left: 0.32in;
+  margin-right: -2.25in;
+  margin-bottom: 6pt;
+  font-size: 8.4pt;
+  line-height: 1.32;
+  font-style: normal;
+  font-weight: 400;
+  font-variant-caps: normal;
+  letter-spacing: 0;
+  text-indent: 0;
+  text-align: left;
+  color: #333;
+  hyphens: auto;
+  display: block;
+}
+.sidenote .b-p, .sidenote .b-div, .sidenote .b-blockquote, .footnote .b-p, .footnote .b-div { display: block; margin-top: 0.3em; }
+.sidenote .b-p:first-child, .footnote .b-p:first-child { display: inline; }
+.sidenote .b-li, .footnote .b-li { display: block; padding-left: 1em; text-indent: -0.7em; }
+.sidenote .b-li::before, .footnote .b-li::before { content: "– "; }
+.sidenote .b-blockquote { padding-left: 0.8em; border-left: 0.5pt solid #b8b8b8; }
+.note-num { font-variant-numeric: lining-nums; font-weight: 600; font-size: 7.8pt; margin-right: 1pt; }
+sup.note-call {
+  font-size: 7pt;
+  line-height: 0;
+  vertical-align: 0.55em;
+  font-variant-numeric: lining-nums;
+  font-weight: 600;
+  padding-left: 0.5pt;
+}
+.linknote { font-style: italic; color: #5c5c5c; font-size: 7.8pt; word-break: break-all; hyphens: none; }
+.inline-url { font-style: italic; color: #5c5c5c; font-size: 0.92em; word-break: break-all; }
+.sidenote img.math, .footnote img.math { max-width: 100%; }
+
+/* Long notes go to the foot of the page, under the text column. */
+.footnote {
+  float: footnote;
+  font-size: 8.6pt;
+  line-height: 1.32;
+  font-style: normal;
+  font-weight: 400;
+  font-variant-caps: normal;
+  letter-spacing: 0;
+  color: #333;
+  margin-bottom: 4pt;
+  hyphens: auto;
+}
+.footnote::footnote-call {
+  content: attr(data-n);
+  font-size: 7pt;
+  line-height: 0;
+  vertical-align: 0.55em;
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+  padding-left: 0.5pt;
+}
+.footnote::footnote-marker {
+  content: attr(data-n) " ";
+  font-weight: 600;
+  font-size: 7.8pt;
+  font-variant-numeric: lining-nums;
+}
+
+/* ---- Colophon ---- */
+.colophon {
+  margin-top: 2.2em;
+  padding-top: 6pt;
+  border-top: 0.5pt solid #b8b8b8;
+  font-size: 8.5pt;
+  color: #5c5c5c;
+  font-style: italic;
+  margin-right: 2.25in;
+}

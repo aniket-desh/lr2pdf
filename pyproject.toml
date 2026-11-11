@@ -1,0 +1,17 @@
+[project]
+name = "lr2pdf"
+version = "0.1.0"
+description = "Turn LessWrong posts into print-friendly PDFs with margin notes"
+requires-python = ">=3.12"
+dependencies = [
+    "weasyprint>=63",
+    "beautifulsoup4>=4.12",
+    "lxml>=5",
+]
+
+[project.scripts]
+lr2pdf = "lr2pdf.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
